@@ -11,23 +11,14 @@ import
   View, 
   FlatList,
   Image,
-  TouchableOpacity  
+  TouchableOpacity,
+  Button  
 } from 'react-native';
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 
  
 class Home extends React.Component {
-  static navigationOptions  = {
-    title: 'Tasks',
-    headerRight: (
-      <TouchableOpacity style={{ paddingLeft:15, paddingRight:15 }}>
-          <Image 
-            style = {{ width: 23, height: 23,}}
-            source={require('./images/shopping-list.png')}/>
-      </TouchableOpacity>
-    )
-  };
   constructor(props) {
     super(props);
     
@@ -68,9 +59,38 @@ class Home extends React.Component {
       ]
     };
   }
+  static navigationOptions = ({navigation}) => {
+    return {
+      title: 'Tasks',
+      headerRight: (
+        // <Button
+        //   onPress={navigation.getParam('increaseCount')}
+        //   title="+1"
+        //   color={Platform.OS === 'ios' ? '#564782' : null}
+        // />
+        <TouchableOpacity 
+          style={{ paddingLeft:15, paddingRight:15 }}
+          // onPress= {() => navigation.push('DonePage', {todos: this.state.todos})}
+          onPress={navigation.getParam('onPressEllipsis')}
+          >
+            <Image 
+              style = {{ width: 23, height: 23,}}
+              source={require('./images/shopping-list.png')}/>
+        </TouchableOpacity>
+      )
+    }
+  };
+
+  componentWillMount () {
+    this.props.navigation.setParams({ onPressEllipsis: this._onPressEllipsis });
+  }
   
-  onPressEllipsis () {
-    this.props.navigation.push ('DonePage');
+
+
+  _onPressEllipsis = () => {
+    this.props.navigation.push ('DonePage', {
+      todos: this.state.todos
+    });
   }
 
   // what the crap is this doing
