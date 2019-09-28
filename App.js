@@ -23,8 +23,8 @@ class Home extends React.Component {
     headerRight: (
       <TouchableOpacity style={{ paddingLeft:15, paddingRight:15 }}>
           <Image 
-            style = {{ width: 20, height: 20,}}
-            source={require('./images/shopping-list.svg')}/>
+            style = {{ width: 23, height: 23,}}
+            source={require('./images/shopping-list.png')}/>
       </TouchableOpacity>
     )
   };
