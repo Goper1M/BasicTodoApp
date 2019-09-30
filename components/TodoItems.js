@@ -9,6 +9,7 @@ export default class TodoItem extends React.Component{
 
     render () {
         // where is this todoItem?
+        // ask james about todoItem.
         const todoItem = this.props.todoItem;
 
         return (        

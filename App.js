@@ -33,7 +33,7 @@ class Home extends React.Component {
         },
         {
           id: 1,
-          title: 'Finish this app',
+          title: 'Finish this app completed',
           done: true
         },
         {
@@ -48,7 +48,7 @@ class Home extends React.Component {
         },
         {
           id: 4,
-          title: 'Finish this appfdsfsdafdsa',
+          title: 'Finish this appfdsfsdafdsa completed',
           done: true
         },
         {
@@ -58,6 +58,15 @@ class Home extends React.Component {
         }
       ]
     };
+
+
+    const didBlurSubscription = this.props.navigation.addListener(
+      'willFocus',
+      payload => {
+        this.setState({todos: this.state.todos});
+      }
+    )
+
   }
   static navigationOptions = ({navigation}) => {
     return {
@@ -83,13 +92,16 @@ class Home extends React.Component {
 
   componentWillMount () {
     this.props.navigation.setParams({ onPressEllipsis: this._onPressEllipsis });
+    // <DonePage sendStateBack={(data) => this.parentState(data)}/>
   }
   
-
+  // parentState (value) {
+  //   this.state.setState({value});
+  // }
 
   _onPressEllipsis = () => {
     this.props.navigation.push ('DonePage', {
-      todos: this.state.todos
+      passedTodos: this.state.todos
     });
   }
 
@@ -121,11 +133,15 @@ class Home extends React.Component {
     this.setState({ todos });
   }
 
+  
+
+
   render() {
     // ask about the question mark "?" and colon ":" [x]
     // ask about this shorthand if statement [x]
     const statusbar = (Platform.OS == 'ios') ? <View style={style.statusbar}></View> : <View></View>;
-    console.log(this.state.todoInput); // personal example of how to get the current state.
+    // console.log(this.state.todoInput); // personal example of how to get the current state.
+
     return (
       <View style={style.container}>
         {/* {statusbar} */}
