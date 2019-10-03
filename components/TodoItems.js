@@ -21,7 +21,8 @@ export default class TodoItem extends React.Component{
             <Swipeable
             renderLeftActions={LeftAction} // shows an action panel after user swipes right
             onSwipeableLeftOpen={this.props.onSwipeFromLeft}
-            renderRightActions={(progress, dragX) => <RightAction  dragX={dragX} onPress={this.props.onRightPress} />}
+            renderRightActions={(progress, dragX) => <RightAction progress={progress} dragX={dragX} onPress={this.props.onRightPress} />}
+            overshootRight={false}
             >
                 <TouchableHighlight 
                     style={styles.todoItem}
@@ -49,14 +50,15 @@ const LeftAction = (progress, dragX) => {
     )
 }
 
-const RightAction = ({progress, dragX, onPress}) => {
+const RightAction = ({progress, dragX, onPress}) => { 
     const scale = dragX.interpolate({
         inputRange: [-50, 0], // the user dragged for 100 pixel (inputRange always has to increment)
         outputRange: [1, 0], // after a drag of 100 pixel have full size text
         extrapolate: 'clamp' // means to lock it down to our outputRange.
     })
     return(
-        <TouchableOpacity onPress={onPress}>
+        // this onPres prop is passed an object {onPress} from the component RightAction which than has a prop named onPress, 
+        <TouchableOpacity onPress={onPress}>   
             <View style={styles.rightAction}>
                 <Animated.Text style={[styles.actionText, { transform: [{ scale }]}]}>Delete</Animated.Text>
             </View>
