@@ -3,7 +3,8 @@ import Header from './components/Header';
 import InputBar from './components/InputBar';
 import TodoItem from './components/TodoItems';
 import DonePage from './pages/DonePage';
-import 
+import Swipable from 'react-native-gesture-handler/Swipeable';
+import
 { 
   Platform, 
   StyleSheet, 
@@ -167,7 +168,10 @@ class Home extends React.Component {
             if (!item.done) {
               return (
                 <TodoItem
+                  // {...item}
                   todoItem={item}
+                  onSwipeFromLeft={ () => alert("swiped from left")}
+                  onRightPress={ () => alert("pressed from the right!")}
                   completed={(itemId) => this.completed(itemId)}
                 />
               )
