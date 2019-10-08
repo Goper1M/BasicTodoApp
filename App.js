@@ -151,18 +151,6 @@ class Home extends React.Component {
     return (
       <View style={style.container}>
         {/* {statusbar} */}
-        {/* <Header 
-          title="Hello World!"
-          /> */}
-
-
-        {/* <InputBar
-          // clarify on why we have touse ({}) instead of just using ()
-          textChange={(todoInput) => this.setState({ todoInput })}
-          addNewToDo={() => this.addNewToDo()}
-          todoInput={this.state.todoInput}
-        /> */}
-
 
         <FlatList
           data={this.state.todos}
@@ -184,12 +172,14 @@ class Home extends React.Component {
 
           }}
         />
+
         <InputBar
           // clarify on why we have touse ({}) instead of just using ()
           textChange={(todoInput) => this.setState({ todoInput })}
           addNewToDo={() => this.addNewToDo()}
           todoInput={this.state.todoInput}
         />
+
       </View>
     );
   }
