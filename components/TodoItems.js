@@ -6,9 +6,6 @@ import Swipeable from 'react-native-gesture-handler/Swipeable';
 export default class TodoItem extends React.Component{
     constructor (props) {
         super(props);
-
-
-    
     }
 
     render () {

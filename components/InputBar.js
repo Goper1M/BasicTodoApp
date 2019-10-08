@@ -25,7 +25,8 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         shadowOffset: { width: 0, height: 3},
         shadowOpacity: .1,
-        shadowColor: "#171717"
+        shadowColor: "#171717",
+        padding: 20
     },
     input: {
         backgroundColor: '#F3F3F3',

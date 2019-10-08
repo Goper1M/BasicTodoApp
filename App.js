@@ -3,6 +3,7 @@ import Header from './components/Header';
 import InputBar from './components/InputBar';
 import TodoItem from './components/TodoItems';
 import DonePage from './pages/DonePage';
+import LoginPage from './pages/LoginPage';
 import Swipable from 'react-native-gesture-handler/Swipeable';
 import
 { 
@@ -23,23 +24,27 @@ class Home extends React.Component {
   constructor(props) {
     super(props);
     
-    //not sure what this means yet ask james later for more info [x]
+    //my array and todoInput
     this.state = {
       todoInput: '',
       todos: [
         {
           id: 0,
           title: 'Take out James trash',
-          done: false
+          comments: ['something about it', 'something again another this'],
+          done: false,
+          
         },
         {
           id: 1,
           title: 'Finish this app completed',
+          comments: [' not sure if i can finish this app in time', 'james will help'],
           done: true
         },
         {
           id: 2,
           title: 'Finish tfdsfdsfsdfhis app',
+          comments: [],
           done: false
         },
         {
@@ -87,7 +92,7 @@ class Home extends React.Component {
               style = {{ width: 23, height: 23,}}
               source={require('./images/shopping-list.png')}/>
         </TouchableOpacity>
-      )
+      ),
     }
   };
 
@@ -151,12 +156,12 @@ class Home extends React.Component {
           /> */}
 
 
-        <InputBar
+        {/* <InputBar
           // clarify on why we have touse ({}) instead of just using ()
           textChange={(todoInput) => this.setState({ todoInput })}
           addNewToDo={() => this.addNewToDo()}
           todoInput={this.state.todoInput}
-        />
+        /> */}
 
 
         <FlatList
@@ -179,6 +184,12 @@ class Home extends React.Component {
 
           }}
         />
+        <InputBar
+          // clarify on why we have touse ({}) instead of just using ()
+          textChange={(todoInput) => this.setState({ todoInput })}
+          addNewToDo={() => this.addNewToDo()}
+          todoInput={this.state.todoInput}
+        />
       </View>
     );
   }
@@ -186,9 +197,12 @@ class Home extends React.Component {
 
 const AppNavigator = createStackNavigator(
   {
-    Home: Home,
-    DonePage: DonePage,
-
+    HomeScreen: Home,
+    DonePageScreen: DonePage,
+    LoginPageScreen: LoginPage,
+  },
+  {
+    initialRouteName: 'LoginPageScreen'
   }
 );
 

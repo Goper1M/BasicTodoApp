@@ -1,7 +1,5 @@
 import React from 'react';
 import { View, Text, StyleSheet, FlatList } from 'react-native';
-import { createAppContainer } from 'react-navigation';
-import { createStackNavigator } from 'react-navigation-stack';
 import TodoItem from '../components/TodoItems';
 
 export default class DonePage extends React.Component{
