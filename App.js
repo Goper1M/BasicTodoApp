@@ -4,7 +4,8 @@ import InputBar from './components/InputBar';
 import TodoItem from './components/TodoItems';
 import DonePage from './pages/DonePage';
 import LoginPage from './pages/LoginPage';
-import Swipable from 'react-native-gesture-handler/Swipeable';
+import SignInPage from './pages/SignInPage';
+import SignUpPage from './pages/SignUpPage';
 import
 { 
   Platform, 
@@ -190,6 +191,8 @@ const AppNavigator = createStackNavigator(
     HomeScreen: Home,
     DonePageScreen: DonePage,
     LoginPageScreen: LoginPage,
+    SignInScreen: SignInPage,
+    SignUpScreen: SignUpPage
   },
   {
     initialRouteName: 'LoginPageScreen'
