@@ -9,16 +9,29 @@ import {
     Image
 } from 'react-native'; 
 import { italic } from 'colorette';
+ 
 
 class SignUpPage extends React.Component{
+
+
     static navigationOptions = {
         header: null
     }
 
     constructor(props){
         super(props);
+
+        this.state = {
+            name: "",
+            email: "",
+            password: "",
+            errormessage: null
+        };
     }
 
+    handleSignUp = () => {
+        
+    }
     render(){
         return(
             <View style={styles.container}>
@@ -27,21 +40,31 @@ class SignUpPage extends React.Component{
 
                 <View>
                     <TextInput
-                        placeholder= 'name'
                         style={styles.name}
+                        placeholder= 'name'
+                        onChangeText={ name => this.setState({ name })}
+                        // ask james what the value prop does...
+                        value={ this.state.name }
+
                     />
                     <TextInput
+                        style={ styles.username }
                         placeholder= 'username or email'
-                        style={styles.username}
+                        onChangeText= { username => this.setState({ email })}
+                        value={ this.state.email }
                     />
                     <TextInput
+                        style={ styles.password }
                         placeholder= 'password'
-                        style={styles.password}
+                        onChangeText={ password => this.setState({ password })}
+                        value={ this.state.password }
                     />
                 </View>
                 
                 <View>
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                    onPress={ this.handleSignUp }
+                    >
                         <Text style={styles.btn_signin}>Sign Up</Text>
                     </TouchableOpacity>
                 </View>
