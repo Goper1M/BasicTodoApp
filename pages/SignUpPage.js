@@ -8,8 +8,7 @@ import {
     Button,
     Image
 } from 'react-native'; 
-import { italic } from 'colorette';
- 
+ import * as firebase from 'firebase';
 
 class SignUpPage extends React.Component{
 
@@ -30,8 +29,16 @@ class SignUpPage extends React.Component{
     }
 
     handleSignUp = () => {
-        
-    }
+        firebase
+            .auth()
+            .createUserWithEmailAndPassword( this.state.email, this.state.password )
+            .catch(function(error){
+                var errorCode = error.code;
+                var errormessage = error.message;
+            }
+            )};
+
+
     render(){
         return(
             <View style={styles.container}>
@@ -50,7 +57,7 @@ class SignUpPage extends React.Component{
                     <TextInput
                         style={ styles.username }
                         placeholder= 'username or email'
-                        onChangeText= { username => this.setState({ email })}
+                        onChangeText= { email => this.setState({ email })}
                         value={ this.state.email }
                     />
                     <TextInput
