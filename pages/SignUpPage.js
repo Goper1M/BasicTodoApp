@@ -28,11 +28,11 @@ class SignUpPage extends React.Component{
                 <View>
                     <TextInput
                         placeholder= 'name'
-                        style={styles.username}
+                        style={styles.name}
                     />
                     <TextInput
                         placeholder= 'username or email'
-                        style={styles.password}
+                        style={styles.username}
                     />
                     <TextInput
                         placeholder= 'password'
@@ -101,9 +101,10 @@ const styles = StyleSheet.create({
         padding: 8,
         backgroundColor: '#FAF8F5',
         borderRadius: 4,
+        marginBottom: 33,
     },
     btn_signin: {
-        padding: 8,
+        padding: 15,
         paddingHorizontal: 50,
         borderRadius: 3,
         color: '#fff',
@@ -111,8 +112,8 @@ const styles = StyleSheet.create({
         fontSize: 14,
         marginHorizontal: 8,
         textAlign: 'center',
-        marginTop: 25,
-        fontSize: 15
+        fontSize: 16,
+        
     },
     forgot_password: {
         textAlign: 'center',
