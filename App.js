@@ -118,6 +118,7 @@ class Home extends React.Component {
     this.props.navigation.setParams({ onPressEllipsis: this._onPressEllipsis });
     // <DonePage sendStateBack={(data) => this.parentState(data)}/>
   }
+
   
   // parentState (value) {
   //   this.state.setState({value});
@@ -207,36 +208,31 @@ const AppNavigator = createStackNavigator(
   {
     HomeScreen: Home,
     DonePageScreen: DonePage,
-    LoadingScreen: LoadingPage
+  },
+);
+
+const AuthNavigator = createStackNavigator(
+  {
+    LoginPageScreen: LoginPage,
+    SignInScreen: SignInPage,
+    SignUpScreen: SignUpPage,
   },
   {
-    initialRouteName: 'LoadingScreen'
+    initialRouteName: 'LoginPageScreen'
   }
 );
 
-// const AuthNavigator = createStackNavigator(
-//   {
-//     LoginPageScreen: LoginPage,
-//     SignInScreen: SignInPage,
-//     SignUpScreen: SignUpPage,
-//     LoadingScreen: LoadingPage
-//   },
-//   {
-//     initialRouteName: 'LoginPageScreen'
-//   }
-// );
+const SwitchNavigator = createSwitchNavigator(
+  {
+    LoadingScreen: LoadingPage,
+    App: AppNavigator,
+    Auth: AuthNavigator
+  },
+)
+
+export default createAppContainer(SwitchNavigator);
 
 
-export default createAppContainer(AppNavigator);
-
-// export default createAppContainer(
-//   createSwitchNavigator(
-//     {
-//       App: AppNavigator,
-//       Auth: AuthNavigator
-//     } 
-//   ) 
-// );
 
 const style = StyleSheet.create({
   container: {
