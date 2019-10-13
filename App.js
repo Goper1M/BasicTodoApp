@@ -1,26 +1,13 @@
-import React from 'react';
-import Header from './components/Header';
-import InputBar from './components/InputBar';
-import TodoItem from './components/TodoItems';
 import DonePage from './pages/DonePage';
 import LoginPage from './pages/LoginPage';
 import SignInPage from './pages/SignInPage';
 import SignUpPage from './pages/SignUpPage';
 import LoadingPage from './pages/LoadingPage';
 import HomePage from './pages/HomePage';
-import
-{ 
-  Platform, 
-  StyleSheet, 
-  Text, 
-  View, 
-  FlatList,
-  Image,
-  TouchableOpacity,
-  Button  
-} from 'react-native';
+
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
+
 import * as firebase from "firebase";
 
 const firebaseConfig = {
@@ -70,4 +57,5 @@ const SwitchNavigator = createSwitchNavigator(
 )
 
 export default createAppContainer(SwitchNavigator);
+
 
