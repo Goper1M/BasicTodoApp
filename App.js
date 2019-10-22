@@ -20,10 +20,8 @@ const firebaseConfig = {
   appId: "1:820149163211:web:68dce1f9a51913ac8af74e",
   measurementId: "G-EDT7CZKB0Z"
 };
-
+// what does this really do?
 firebase.initializeApp(firebaseConfig);
-
-
 
 
 
@@ -41,7 +39,7 @@ const AuthNavigator = createStackNavigator(
     SignUpScreen: SignUpPage,
   },
   {
-    initialRouteName: 'LoginPageScreen'
+    initialRouteName:('LoginPageScreen')
   }
 );
 
@@ -52,7 +50,7 @@ const SwitchNavigator = createSwitchNavigator(
     Auth: AuthNavigator
   },
   {
-    initialRouteName: 'App'
+    initialRouteName:('LoadingScreen')
   }
 )
 

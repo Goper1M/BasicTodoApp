@@ -12,6 +12,9 @@ import
   TouchableOpacity,
 } from 'react-native';
 
+import * as firebase from "firebase";
+
+
 export default class HomePage extends React.Component {
     constructor(props) {
       super(props);
@@ -57,7 +60,7 @@ export default class HomePage extends React.Component {
         ]
       };
   
-  
+      // before the homescreen is in focus do this.
       const didBlurSubscription = this.props.navigation.addListener(
         'willFocus',
         payload => {
@@ -66,6 +69,7 @@ export default class HomePage extends React.Component {
       )
   
     }
+    // Header config
     static navigationOptions = ({navigation}) => {
       return {
         title: 'Tasks',
@@ -77,7 +81,7 @@ export default class HomePage extends React.Component {
           // />
           <TouchableOpacity 
             style={{ paddingLeft:15, paddingRight:15 }}
-            // onPress= {() => navigation.push('DonePage', {todos: this.state.todos})}
+            // *** after we setParam, we need to getParam the key value onPressEllipsis which is also "_onPressEllipsis"
             onPress={navigation.getParam('onPressEllipsis')}
             >
               <Image 
@@ -87,24 +91,17 @@ export default class HomePage extends React.Component {
         ),
       }
     };
-  
+    //  *** before the UI renders we will use the method setParams to set _onPressEllipsis to onPressEllipsis
     componentWillMount () {
       this.props.navigation.setParams({ onPressEllipsis: this._onPressEllipsis });
-      // <DonePage sendStateBack={(data) => this.parentState(data)}/>
     }
-  
-    
-    // parentState (value) {
-    //   this.state.setState({value});
-    // }
-  
+    // *** during the method getParam it will bring us this this function and execute it accordingly
     _onPressEllipsis = () => {
       this.props.navigation.push ('DonePageScreen', {
         passedTodos: this.state.todos
       });
     }
-  
-    // what the crap is this doing
+    // add a new todo to the state after button is pressed
     addNewToDo() {
       let todos = this.state.todos;
   
@@ -119,8 +116,8 @@ export default class HomePage extends React.Component {
         todoInput: ''
       });
     }
-    // what the crap is this doing
-    completed(todoId) {
+    // clicking a todo will make it completed
+    toggleCompleted(todoId) {
       let todos = this.state.todos;
   
       todos.forEach(todo => {
@@ -131,7 +128,26 @@ export default class HomePage extends React.Component {
   
       this.setState({ todos });
     }
-  
+    handleSignOut(){
+      firebase
+        .auth()
+        .signOut()
+        .catch(function(error) {
+          console.log('error happened here in handleSignOut')
+      });
+    }
+    showUserInfo(){
+      let user = firebase.auth().currentUser;
+      let name, email, uid, emailVerified;
+
+      if(user != null){
+        name = user.displayName;
+        email = user.email;
+        emailVerified = user.emailVerified;
+        uid = user.uid;
+      }
+      
+    }
     
   
   
@@ -158,14 +174,25 @@ export default class HomePage extends React.Component {
                     todoItem={item}
                     onSwipeFromLeft={ () => alert("swiped from left")}
                     onRightPress={ () => alert("pressed from the right!")}
-                    completed={(itemId) => this.completed(itemId)}
+                    completed={(itemId) => this.toggleCompleted(itemId)}
                   />
                 )
               }
   
             }}
           />
-          <TouchableOpacity style={ style.btn_signout }>
+
+          <TouchableOpacity
+            style={ style.btn_signout2 }
+            onPress={this.showUserInfo}
+          >
+            <Text style={{color:'#fff', fontSize: 14}}>User Info</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity 
+            style={ style.btn_signout }
+            onPress={this.handleSignOut}
+          >
             <Text style={{color:'#fff', fontSize: 14}}>Sign out</Text>
           </TouchableOpacity>
           <InputBar
@@ -201,5 +228,18 @@ const style = StyleSheet.create({
       textAlign: 'center',
       fontSize: 16,
       alignItems: 'center'
+    },
+    btn_signout2: {
+      padding: 15,
+      paddingHorizontal: 50,
+      borderRadius: 3,
+      color: '#fff',
+      backgroundColor: '#D62459',
+      fontSize: 14,
+      marginHorizontal: 8,
+      textAlign: 'center',
+      fontSize: 16,
+      alignItems: 'center',
+      marginBottom: 15
     }
   });

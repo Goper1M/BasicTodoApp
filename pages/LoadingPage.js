@@ -24,12 +24,11 @@ export default class LoadingPage extends React.Component{
         );
     };
     componentDidMount=()=>{
-        var app = this.props.navigation.navigate('App')
-
         // use the ES6 syntax here to pass in scope and get rid of the 'function' name
-        firebase.auth().onAuthStateChanged((user) =>{
+        firebase.auth().onAuthStateChanged(user =>{
             if (user) {
                 this.props.navigation.navigate('App')
+                // alert('user is already signed in')
             }else {
                 this.props.navigation.navigate('Auth')
             }

@@ -24,7 +24,7 @@ class SignUpPage extends React.Component{
             name: "",
             email: "",
             password: "",
-            errormessage: null
+            errorMessage: null
         };
     }
 
@@ -32,11 +32,15 @@ class SignUpPage extends React.Component{
         firebase
             .auth()
             .createUserWithEmailAndPassword( this.state.email, this.state.password )
+            // .then(()=>{
+            //     this.props.navigation.navigate('App')
+            //     // console.log ('account created')
+            // })
             .catch(function(error){
-                var errorCode = error.code;
-                var errormessage = error.message;
-            }
-            )};
+                // var errorCode = error.code;s
+                // var errormessage = error.message;
+            })
+    };
 
 
     render(){
@@ -106,6 +110,7 @@ const styles = StyleSheet.create({
     subtitle: {
         fontSize: 20,
         fontWeight: '500',
+        marginBottom: 25
         // fontStyle: 'italic'
     },
     name: {

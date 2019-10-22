@@ -8,8 +8,7 @@ import {
     Button,
     Image
 } from 'react-native';
-// import App from '../App';
-
+import * as firebase from 'firebase';
 class LoginPage extends React.Component {
     static navigationOptions = {
         // title: null,
@@ -19,6 +18,19 @@ class LoginPage extends React.Component {
         super(props);
     }
 
+    // getUserInfo(){
+    //     let user = firebase.auth().currentUser;
+    //     let name, email, uid, emailVerified;
+
+    //     if(user != null){
+    //         name = user.displayName;
+    //         email = user.email;
+    //         emailVerified = user.emailVerified;
+    //         uid = user.uid;
+    //     }else{
+    //         alert('USERS LOGGED OUT !!')
+    //     }
+    // }
 
     render() {
         return (
