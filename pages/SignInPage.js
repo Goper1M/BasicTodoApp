@@ -33,6 +33,9 @@ class SignInPage extends React.Component{
             .signInWithEmailAndPassword(this.state.email, this.state.password)
             .catch(error => this.setState({errorMessage: error.message}));
     }
+    handleSignUp(){
+        
+    }
 
     render(){
         return(
@@ -71,7 +74,9 @@ class SignInPage extends React.Component{
                     <TouchableOpacity>
                         <Text style={styles.forgot_password}>forget password?</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity >
+                    <TouchableOpacity
+                        onPress={this.handleSignUp}
+                    >
                         <Text style={styles.sign_up}>don't have an account? <Text style={{color: '#D62459', fontWeight: '600'}}>sign up</Text></Text>
                     </TouchableOpacity>
                 </View>
