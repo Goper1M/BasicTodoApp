@@ -12,6 +12,7 @@ export default class TodoItem extends React.Component{
         // where is this todoItem?
         // ask james about todoItem.
         const todoItem = this.props.todoItem;
+        const mcolor = todoItem.colorValue;
         // const onSwipeFromLeft = this.props.onSwipeFromLeft;
 
         return (
@@ -21,13 +22,16 @@ export default class TodoItem extends React.Component{
             renderRightActions={(progress, dragX) => <RightAction progress={progress} dragX={dragX} onPress={this.props.onRightPress} />}
             overshootRight={false}
             >
-                <TouchableHighlight 
+                <TouchableOpacity 
                     style={styles.todoItem}
-                    onPress={ () => this.props.completed(this.props.todoItem.id)}>                  
-                            <Text style={(todoItem.done) ? { color: '#FF0000', textDecorationLine: 'line-through' } : {color: '#313131'}}>
-                                { todoItem.title }
+                    onPress={ () => this.props.completed(this.props.todoItem.listid)}>                  
+                            <View   
+                                style={[styles.circle, {backgroundColor: mcolor}]}></View>
+                            <Text style={(todoItem.isComplete) ? { color: '#FF0000', textDecorationLine: 'line-through' } : {color: '#313131'}}>
+                                { todoItem.listName }
                             </Text>
-                </TouchableHighlight>
+
+                </TouchableOpacity>
             </Swipeable>
         )
     }
@@ -70,9 +74,16 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between',
+        // justifyContent: 'space-between',
         paddingLeft: 15,
         backgroundColor: '#fff'
+    },
+    circle:{
+        height: 15,
+        width: 15,
+        borderRadius: 15/2,
+        marginRight: 10,
+        backgroundColor: "#fec"
     },
     seperator: {
         flex: 1,

@@ -20,45 +20,45 @@ export default class HomePage extends React.Component {
       super(props);
       
       //my array and todoInput
-      this.state = {
-        todoInput: '',
-        todos: [
-          {
-            id: 0,
-            title: 'Take out James trash',
-            comments: ['something about it', 'something again another this'],
-            done: false,
+      // this.state = {
+      //   todoInput: '',
+      //   todos: [
+      //     {
+      //       id: 0,
+      //       title: 'Take out James trash',
+      //       comments: ['something about it', 'something again another this'],
+      //       done: false,
             
-          },
-          {
-            id: 1,
-            title: 'Finish this app completed',
-            comments: [' not sure if i can finish this app in time', 'james will help'],
-            done: true
-          },
-          {
-            id: 2,
-            title: 'Finish tfdsfdsfsdfhis app',
-            comments: [],
-            done: false
-          },
-          {
-            id: 3,
-            title: 'Finish thfdsfdsfsdais app',
-            done: false
-          },
-          {
-            id: 4,
-            title: 'Finish this appfdsfsdafdsa completed',
-            done: true
-          },
-          {
-            id: 5,
-            title: 'fdsfdsafdsaFinish this app',
-            done: false
-          }
-        ]
-      };
+      //     },
+      //     {
+      //       id: 1,
+      //       title: 'Finish this app completed',
+      //       comments: [' not sure if i can finish this app in time', 'james will help'],
+      //       done: true
+      //     },
+      //     {
+      //       id: 2,
+      //       title: 'Finish tfdsfdsfsdfhis app',
+      //       comments: [],
+      //       done: false
+      //     },
+      //     {
+      //       id: 3,
+      //       title: 'Finish thfdsfdsfsdais app',
+      //       done: false
+      //     },
+      //     {
+      //       id: 4,
+      //       title: 'Finish this appfdsfsdafdsa completed',
+      //       done: true
+      //     },
+      //     {
+      //       id: 5,
+      //       title: 'fdsfdsafdsaFinish this app',
+      //       done: false
+      //     }
+      //   ]
+      // };
   
       // before the homescreen is in focus do this.
       const didBlurSubscription = this.props.navigation.addListener(
@@ -68,7 +68,26 @@ export default class HomePage extends React.Component {
         }
       )
   
+      this.state = {
+        list:[]
+      }
+
     }
+
+    componentDidMount(){
+        fetch("http://localhost:3000/list/getAllParent")
+        .then(response => response.json())
+        .then((responseJson)=> {
+        this.setState({list:responseJson})
+        })
+        .catch(error=>console.log(error)) //to catch the errors if any
+
+        this.props.navigation.setParams({ onPressEllipsis: this._onPressEllipsis });
+
+    }
+
+
+
     // Header config
     static navigationOptions = ({navigation}) => {
       return {
@@ -92,9 +111,9 @@ export default class HomePage extends React.Component {
       }
     };
     //  *** before the UI renders we will use the method setParams to set _onPressEllipsis to onPressEllipsis
-    componentWillMount () {
-      this.props.navigation.setParams({ onPressEllipsis: this._onPressEllipsis });
-    }
+    // componentWillMount () {
+    //   this.props.navigation.setParams({ onPressEllipsis: this._onPressEllipsis });
+    // }
     // *** during the method getParam it will bring us this this function and execute it accordingly
     _onPressEllipsis = () => {
       this.props.navigation.push ('DonePageScreen', {
@@ -162,22 +181,22 @@ export default class HomePage extends React.Component {
           {/* {statusbar} */}
   
           <FlatList
-            data={this.state.todos}
+            data={this.state.list}
             extraData={this.state}
-            keyExtractor={(item, index) => index.toString()}
+            keyExtractor={(item, index) => item.listId.toString()}
             renderItem={({ item, index }) => {
   
-              if (!item.done) {
+              // if (!item.isComplete) {
                 return (
                   <TodoItem
                     // {...item}
                     todoItem={item}
                     onSwipeFromLeft={ () => alert("swiped from left")}
                     onRightPress={ () => alert("pressed from the right!")}
-                    completed={(itemId) => this.toggleCompleted(itemId)}
+                    // completed={(itemId) => this.toggleCompleted(itemId)}
                   />
                 )
-              }
+              // }
   
             }}
           />

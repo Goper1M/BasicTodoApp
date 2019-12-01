@@ -18,18 +18,13 @@ class LoginPage extends React.Component {
         super(props);
     }
 
-    // getUserInfo(){
-    //     let user = firebase.auth().currentUser;
-    //     let name, email, uid, emailVerified;
-
-    //     if(user != null){
-    //         name = user.displayName;
-    //         email = user.email;
-    //         emailVerified = user.emailVerified;
-    //         uid = user.uid;
-    //     }else{
-    //         alert('USERS LOGGED OUT !!')
-    //     }
+    // getColors() {
+    //     fetch("http://localhost:3000/")
+    //     .then(response => response.json())
+    //     .then((responseJson)=> {
+    //     console.log(responseJson);
+    //     })
+    //     .catch(error=>console.log(error)) //to catch the errors if any
     // }
 
     render() {
@@ -46,11 +41,12 @@ class LoginPage extends React.Component {
                     </TouchableOpacity>
                     <TouchableOpacity 
                         // onPress={() => {this.props.navigation.push('HomeScreen')}}
+                        onPress={() => {this.getColors()}}
                     >
                         <Text style={styles.btn_google}>Sign-in with Google</Text>
                     </TouchableOpacity>
 
-                    <Text style={styles.horizontal_line}>────────────  OR WITH EMAIL  ────────────</Text>
+                    <Text style={styles.horizontal_line}>────────  CONTINUE WITH EMAIL  ────────</Text>
 
                     <View style={{flexDirection: 'row'}}>
                         <TouchableOpacity onPress={()=>{this.props.navigation.push('SignInScreen')}}>

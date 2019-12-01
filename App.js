@@ -50,7 +50,7 @@ const SwitchNavigator = createSwitchNavigator(
     Auth: AuthNavigator
   },
   {
-    initialRouteName:('LoadingScreen')
+    initialRouteName:('App')
   }
 )
 
