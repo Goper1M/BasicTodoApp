@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, Text, Animated, Button, TouchableOpacity, TouchableHighlight, View } from 'react-native';
-import replacePathSepForGlob from 'jest-util/build/replacePathSepForGlob';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 
 export default class TodoItem extends React.Component{
@@ -11,28 +10,51 @@ export default class TodoItem extends React.Component{
     render () {
         // where is this todoItem?
         // ask james about todoItem.
-        const todoItem = this.props.todoItem;
-        const mcolor = todoItem.colorValue;
+        const item = this.props.todoItem;
+        const mcolor = item.colorValue;
+        const count = item.totalTodos;
+        const listId =
+        console.log(item.totalTodos);
         // const onSwipeFromLeft = this.props.onSwipeFromLeft;
 
         return (
-            <Swipeable
-            renderLeftActions={LeftAction} // shows an action panel after user swipes right
-            onSwipeableLeftOpen={this.props.onSwipeFromLeft}
-            renderRightActions={(progress, dragX) => <RightAction progress={progress} dragX={dragX} onPress={this.props.onRightPress} />}
-            overshootRight={false}
-            >
-                <TouchableOpacity 
-                    style={styles.todoItem}
-                    onPress={ () => this.props.completed(this.props.todoItem.listid)}>                  
-                            <View   
-                                style={[styles.circle, {backgroundColor: mcolor}]}></View>
-                            <Text style={(todoItem.isComplete) ? { color: '#FF0000', textDecorationLine: 'line-through' } : {color: '#313131'}}>
-                                { todoItem.listName }
-                            </Text>
+            <View>
+                <Swipeable
+                renderLeftActions={ LeftAction } // shows an action panel after user swipes right
+                onSwipeableLeftOpen={ this.props.onSwipeFromLeft }
+                renderRightActions={(progress, dragX) => <RightAction progress={ progress } dragX={ dragX } onPress={ this.props.onRightPress } />}
+                overshootRight={false}
+                >
+                    <TouchableOpacity 
+                        style={ styles.todoItem} 
+                        // onPress={ () => this.props.completed( this.props.item.listid )}
+                        onPress={ () => {
+                            this.props.getTodos( item.listId )}
+                        }
+                        // onPress={ () => this.props.navigation( 'TodoPageScreen' )}
 
+
+                        >                  
+                        <View style={[styles.circle, {backgroundColor: mcolor}]}></View>
+                        <Text style={( item.isComplete ) ? { color: '#FF0000', textDecorationLine: 'line-through' } : {color: '#313131'}}>
+                            { item.listName }
+                        </Text>
+                        <Text style={ styles.todoCount }>
+                            {item.totalTodos != 0 ? item.totalTodos : ""}
+                        </Text>
+                    </TouchableOpacity>
+                </Swipeable>
+                {/* <View>
+                <TouchableOpacity
+                    style={ styles.subTodoItem }
+                >
+                    <View style={[styles.circle, {backgroundColor: mcolor}]}></View>
+                    <Text>
+                        { todoItem.listName }
+                    </Text>
                 </TouchableOpacity>
-            </Swipeable>
+                </View> */}
+            </View>
         )
     }
 }
@@ -79,11 +101,25 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff'
     },
     circle:{
-        height: 15,
-        width: 15,
-        borderRadius: 15/2,
-        marginRight: 10,
+        height: 13,
+        width: 13,
+        borderRadius: 13/2,
+        marginRight: 15,
         backgroundColor: "#fec"
+    },
+    subTodoItem:{
+        alignItems: 'center',
+        flexDirection: 'row',
+        borderBottomColor: '#DDD',
+        borderBottomWidth: 1,
+        height: 40,
+        paddingLeft: 35
+    },
+    todoCount: {
+        fontSize: 10,
+        marginLeft: 5,
+        color: "#b8b8b8"
+
     },
     seperator: {
         flex: 1,
