@@ -16,50 +16,22 @@ import * as firebase from "firebase";
 
 
 export default class HomePage extends React.Component {
+  
+  _isMounted = false;
+
     constructor(props) {
       super(props);
-      
-      //my array and todoInput
-      // this.state = {
-      //   todoInput: '',
-      //   todos: [
-      //     {
-      //       id: 0,
-      //       title: 'Take out James trash',
-      //       comments: ['something about it', 'something again another this'],
-      //       done: false,
-            
-      //     },
-      //     {
-      //       id: 1,
-      //       title: 'Finish this app completed',
-      //       comments: [' not sure if i can finish this app in time', 'james will help'],
-      //       done: true
-      //     },
-      //     {
-      //       id: 2,
-      //       title: 'Finish tfdsfdsfsdfhis app',
-      //       comments: [],
-      //       done: false
-      //     },
-      //     {
-      //       id: 3,
-      //       title: 'Finish thfdsfdsfsdais app',
-      //       done: false
-      //     },
-      //     {
-      //       id: 4,
-      //       title: 'Finish this appfdsfsdafdsa completed',
-      //       done: true
-      //     },
-      //     {
-      //       id: 5,
-      //       title: 'fdsfdsafdsaFinish this app',
-      //       done: false
-      //     }
-      //   ]
-      // };
-  
+
+      this.state = {
+        list:[],
+        listName : "",
+        listDescription : null,
+        userId  : 1,
+        parentListId : null,
+        sortOrder : 7,
+        colorCode : "red",
+        isFavorite : 0
+      }
       // before the homescreen is in focus do this.
       const didBlurSubscription = this.props.navigation.addListener(
         'willFocus',
@@ -67,23 +39,16 @@ export default class HomePage extends React.Component {
           this.setState({todos: this.state.todos});
         }
       )
-  
-      this.state = {
-        list:[]
-      }
-
     }
 
     componentDidMount(){
-        fetch("http://localhost:3000/list/getAllParent")
-        .then(response => response.json())
-        .then((responseJson)=> {
-        this.setState({list:responseJson})
-        })
-        .catch(error=>console.log(error)) //to catch the errors if any
+      this._isMounted = true;
+      this.getList()
+      this.props.navigation.setParams({ onPressEllipsis: this._onPressEllipsis });
+    }
 
-        this.props.navigation.setParams({ onPressEllipsis: this._onPressEllipsis });
-
+    componentWillUnmount(){
+      this._isMounted = false;
     }
 
 
@@ -117,24 +82,45 @@ export default class HomePage extends React.Component {
     // *** during the method getParam it will bring us this this function and execute it accordingly
     _onPressEllipsis = () => {
       this.props.navigation.push ('DonePageScreen', {
-        passedTodos: this.state.todos
+        passedTodos: this.state.list
       });
+    }
+
+    getList = () => {
+
+      fetch("http://localhost:3000/list/getAllActiveParent")
+      .then(response => response.json())
+      .then((responseJson)=> {
+        if(this._isMounted){
+          this.setState({list:responseJson})
+        }
+      })
+      .catch(error=>console.log(error)) //to catch the errors if any
+      
     }
     // add a new todo to the state after button is pressed
-    addNewToDo() {
-      let todos = this.state.todos;
-  
-      todos.unshift({
-        id: todos.length + 1,
-        title: this.state.todoInput,
-        done: false
-      });
-  
-      this.setState({
-        todos,
-        todoInput: ''
-      });
+    addNewList() {
+    fetch("http://localhost:3000/list/create", {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          listName : this.state.listName,
+          listDescription : this.state.listDescription,
+          userId : this.state.userId,
+          parentListId : this.state.parentListId,
+          sortOrder : this.state.sortOrder,
+          colorCode : this.state.colorCode,
+          isFavorite : this.state.isFavorite
+        }),
+    }).then(() => {
+        this.getList()
+      })
+      .catch(error => console.log(error)) //to catch the errors if any
     }
+
     // clicking a todo will make it completed
     toggleCompleted(todoId) {
       let todos = this.state.todos;
@@ -167,9 +153,13 @@ export default class HomePage extends React.Component {
       }
       
     }
+
+    getTodos = (itemId) => {
+      this.props.navigation.navigate ('TodoPageScreen', {
+        passedItemId: itemId
+      });
+    }
     
-  
-  
     render() {
       // ask about the question mark "?" and colon ":" [x]
       // ask about this shorthand if statement [x]
@@ -186,7 +176,7 @@ export default class HomePage extends React.Component {
             keyExtractor={(item, index) => item.listId.toString()}
             renderItem={({ item, index }) => {
   
-              // if (!item.isComplete) {
+              if (!item.isComplete) {
                 return (
                   <TodoItem
                     // {...item}
@@ -194,9 +184,11 @@ export default class HomePage extends React.Component {
                     onSwipeFromLeft={ () => alert("swiped from left")}
                     onRightPress={ () => alert("pressed from the right!")}
                     // completed={(itemId) => this.toggleCompleted(itemId)}
+                    getTodos={(itemId) => this.getTodos(itemId)}
+
                   />
                 )
-              // }
+              }
   
             }}
           />
@@ -214,11 +206,13 @@ export default class HomePage extends React.Component {
           >
             <Text style={{color:'#fff', fontSize: 14}}>Sign out</Text>
           </TouchableOpacity>
+
+
           <InputBar
             // clarify on why we have touse ({}) instead of just using ()
-            textChange={(todoInput) => this.setState({ todoInput })}
-            addNewToDo={() => this.addNewToDo()}
-            todoInput={this.state.todoInput}
+            textChange={(todoInput) => this.setState({ listName : todoInput})}
+            addNewToDo={() => this.addNewList()}
+            todoInput={this.state.listName} // rename this better man
           />
   
         </View>
