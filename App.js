@@ -4,6 +4,7 @@ import SignInPage from './pages/SignInPage';
 import SignUpPage from './pages/SignUpPage';
 import LoadingPage from './pages/LoadingPage';
 import HomePage from './pages/HomePage';
+import TodoPage from './pages/TodoPage';
 
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
@@ -29,6 +30,7 @@ const AppNavigator = createStackNavigator(
   {
     HomeScreen: HomePage,
     DonePageScreen: DonePage,
+    TodoPageScreen: TodoPage
   },
 );
 
