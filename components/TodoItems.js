@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         // justifyContent: 'space-between',
-        paddingLeft: 15,
+        paddingLeft: 13,
         backgroundColor: '#fff'
     },
     circle:{

@@ -155,8 +155,8 @@ export default class HomePage extends React.Component {
     }
 
     getTodos = (itemId) => {
-      this.props.navigation.navigate ('TodoPageScreen', {
-        passedItemId: itemId
+      this.props.navigation.push ('TodoPageScreen', { 
+        passedItemId: itemId 
       });
     }
     

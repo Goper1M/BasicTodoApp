@@ -10,9 +10,20 @@ export default class DonePage extends React.Component{
         super (props);
 
         this.state= {
-            receivedTodos: this.props.navigation.getParam ('passedTodos', 'temp')
+            list:[]
+            // receivedTodos: this.props.navigation.getParam ('passedTodos', 'temp')   
         }
-        // console.log(receivedTodos);
+
+        // console.log(list);
+    }
+    componentDidMount(){
+        
+        fetch("http://localhost:3000/list/getAllActiveParent")
+        .then(response => response.json())
+        .then((responseJson)=> {
+        this.setState({list:responseJson})
+        })
+        .catch(error=>console.log(error)) //to catch the errors if any
     }
 
     unComplete = (itemId) => {
