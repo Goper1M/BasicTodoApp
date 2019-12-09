@@ -29,7 +29,7 @@ export default class TodoItem extends React.Component{
                         style={ styles.todoItem} 
                         // onPress={ () => this.props.completed( this.props.item.listid )}
                         onPress={ () => {
-                            this.props.getTodos( item.listId )}
+                            this.props.getTodos( item.listId, item.listName )}
                         }
                         // onPress={ () => this.props.navigation( 'TodoPageScreen' )}
 

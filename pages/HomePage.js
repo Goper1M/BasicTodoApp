@@ -36,7 +36,7 @@ export default class HomePage extends React.Component {
       const didBlurSubscription = this.props.navigation.addListener(
         'willFocus',
         payload => {
-          this.setState({todos: this.state.todos});
+          this.getList();
         }
       )
     }
@@ -56,7 +56,7 @@ export default class HomePage extends React.Component {
     // Header config
     static navigationOptions = ({navigation}) => {
       return {
-        title: 'Tasks',
+        title: 'Lists',
         headerRight: (
           // <Button
           //   onPress={navigation.getParam('increaseCount')}
@@ -154,9 +154,10 @@ export default class HomePage extends React.Component {
       
     }
 
-    getTodos = (itemId) => {
-      this.props.navigation.push ('TodoPageScreen', { 
-        passedItemId: itemId 
+    getTodos = (itemId, itemName) => {
+      this.props.navigation.navigate ('TodoPageScreen', { 
+        passedItemId: itemId,
+        passedItemName: itemName 
       });
     }
     
@@ -184,7 +185,7 @@ export default class HomePage extends React.Component {
                     onSwipeFromLeft={ () => alert("swiped from left")}
                     onRightPress={ () => alert("pressed from the right!")}
                     // completed={(itemId) => this.toggleCompleted(itemId)}
-                    getTodos={(itemId) => this.getTodos(itemId)}
+                    getTodos={(itemId, itemName) => this.getTodos(itemId, itemName)}
 
                   />
                 )
@@ -193,18 +194,16 @@ export default class HomePage extends React.Component {
             }}
           />
 
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={ style.btn_signout2 }
-            onPress={this.showUserInfo}
-          >
-            <Text style={{color:'#fff', fontSize: 14}}>User Info</Text>
+            onPress={this.showUserInfo}>
+              <Text style={{color:'#fff', fontSize: 14}}>User Info</Text>
           </TouchableOpacity>
 
           <TouchableOpacity 
             style={ style.btn_signout }
-            onPress={this.handleSignOut}
-          >
-            <Text style={{color:'#fff', fontSize: 14}}>Sign out</Text>
+            onPress={this.handleSignOut}>
+              <Text style={{color:'#fff', fontSize: 14}}>Sign out</Text>
           </TouchableOpacity>
 
 
@@ -212,9 +211,7 @@ export default class HomePage extends React.Component {
             // clarify on why we have touse ({}) instead of just using ()
             textChange={(todoInput) => this.setState({ listName : todoInput})}
             addNewToDo={() => this.addNewList()}
-            todoInput={this.state.listName} // rename this better man
-          />
-  
+            todoInput={this.state.listName}/>  */}
         </View>
       );
     }
