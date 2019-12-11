@@ -226,8 +226,8 @@ import { FlatList } from 'react-native-gesture-handler';
         borderColor: '#d33c3d',
         borderWidth: 1,
         position: 'absolute',
-        bottom: 5,
-        right: 25,
+        bottom: 0,
+        right: 20,
         alignItems:'center',
         justifyContent:'center'
     },
